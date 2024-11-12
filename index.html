@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="images/favicon.webp" sizes="16x16" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/favicon.webp">
+
+    <title>Rasmalai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body class="bg-gray-50 min-h-screen font-['Poppins']">
+    <div class="onlyforcolor">
+    <!-- Navigation -->
+    <nav class="nav-blur fixed w-full z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold gradient-text">Rasmalai</h1>
+                <div class="flex items-center space-x-6">
+                    <a href="#about" class="text-gray-700 hover:text-blue-600">About Us</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Animated Text -->
+    <div class="text-center pt-24 pb-8">
+        <h2 class="text-2xl font-bold text-blue-600 bounce-text">Build your resume in 2 minutes</h2>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pb-8">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Input Form -->
+            <div class="space-y-6">
+                <!-- Personal Information -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Personal Information</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <label for="profileImage" class="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer overflow-hidden border-2 border-blue-500">
+                                <img id="previewImage" src="#" alt="" class="hidden w-full h-full object-cover">
+                                <i class="bi bi-camera text-3xl text-blue-500"></i>
+                            </label>
+                            <input type="file" id="profileImage" accept="image/*" class="hidden" onchange="previewProfileImage(event)">
+                        </div>
+                        <input type="text" id="fullName" placeholder="Full Name" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        <input type="text" id="jobTitle" placeholder="Desired Job Title" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        <input type="tel" id="contactNo" placeholder="Contact Number" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        <input type="email" id="email" placeholder="Email Address" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        <input type="text" id="address" placeholder="Address" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        <textarea id="summary" placeholder="Professional Summary" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 h-32"></textarea>
+                    </div>
+                </div>
+
+                <!-- Education Details -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Education Details</h2>
+                    <div id="educationFields" class="space-y-4">
+                        <div class="education-entry space-y-2">
+                            <input type="text" placeholder="School/University" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                            <input type="text" placeholder="Degree" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                            <input type="text" placeholder="Year of Passing" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <button onclick="addEducation()" class="mt-4 text-blue-600 hover:text-blue-700">
+                        <i class="bi bi-plus-circle"></i> Add Education
+                    </button>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Skills</h2>
+                    <div id="skillsFields" class="space-y-4">
+                        <input type="text" id="skills" placeholder="Add your skills (separated by commas)" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Work Experience Section -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Work Experience</h2>
+                    <div id="experienceFields" class="space-y-4">
+                        <div class="experience-entry space-y-2">
+                            <input type="text" placeholder="Company Name" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                            <input type="text" placeholder="Position" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                            <textarea placeholder="Job Description" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 h-24"></textarea>
+                        </div>
+                    </div>
+                    <button onclick="addExperience()" class="mt-4 text-blue-600 hover:text-blue-700">
+                        <i class="bi bi-plus-circle"></i> Add Experience
+                    </button>
+                </div>
+
+                <!-- Project Details -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Project Details</h2>
+                    <div id="projectFields" class="space-y-4">
+                        <div class="project-entry space-y-2">
+                            <input type="text" placeholder="Project Title" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                            <textarea placeholder="Project Description" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 h-24"></textarea>
+                        </div>
+                    </div>
+                    <button onclick="addProject()" class="mt-4 text-blue-600 hover:text-blue-700">
+                        <i class="bi bi-plus-circle"></i> Add Project
+                    </button>
+                </div>
+
+                <div class="flex space-x-4">
+                    <button onclick="generateResume()" class="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                        Generate Resume
+                    </button>
+                    <button onclick="downloadResume()" class="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
+                        Download PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg" id="resumePreview">
+                <!-- Preview content will be generated dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- About Section -->
+    <section id="about" class="bg-blue-50 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 gradient-text text-center">About Us</h2>
+            <p class="text-lg text-center max-w-2xl mx-auto text-gray-700">
+                Rasmalai is your intelligent resume companion, powered by advanced AI to help you create professional, ATS-friendly resumes that stand out in today's competitive job market.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 gradient-text text-center">Contact Us</h2>
+            <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+                <form class="space-y-4">
+                    <input type="text" placeholder="Your Name" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <input type="email" placeholder="Your Email" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <textarea placeholder="Your Message" class="w-full p-2 rounded border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 h-32"></textarea>
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                        Send Message
+                    </button>
+                </form>
+                <div class="mt-8 flex justify-center space-x-6">
+                    <a href="https://www.instagram.com/sub_ha_sish?igsh=MTh0d25peW91aGlnbQ==" target="_blank" class="text-pink-600 hover:text-pink-700"><i class="bi bi-instagram text-2xl"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100089054142772&mibextid=ZbWKwL" target="_blank" class="text-blue-600 hover:text-blue-700"><i class="bi bi-facebook text-2xl"></i></a>
+                    <a href="https://www.linkedin.com/in/subhasish-pramanik-b52215338/" target="_blank" class="text-blue-700 hover:text-blue-800"><i class="bi bi-linkedin text-2xl"></i></a>
+                    <a href="https://github.com/SUBHASISH2003" target="_blank" class="text-gray-800 hover:text-gray-900"><i class="bi bi-github text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 bg-gray-100">
+        <p>Copyright 2024 © Subhasish All rights reserved. Developed by 
+            <a href="https://www.instagram.com/sub_ha_sish?igsh=MTh0d25peW91aGlnbQ==" target="_blank" class="text-blue-600 hover:text-blue-700">SUBHASISH</a>
+        </p>
+    </footer>
+
+    <script>
+        function previewProfileImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('previewImage');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addEducation() {
+            const container = document.getElementById('educationFields');
+            const template = document.querySelector('.education-entry').cloneNode(true);
+            template.querySelectorAll('input').forEach(input => input.value = '');
+            container.appendChild(template);
+        }
+
+        function addExperience() {
+            const container = document.getElementById('experienceFields');
+            const template = document.querySelector('.experience-entry').cloneNode(true);
+            template.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            container.appendChild(template);
+        }
+
+        function addProject() {
+            const container = document.getElementById('projectFields');
+            const template = document.querySelector('.project-entry').cloneNode(true);
+            template.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            container.appendChild(template);
+        }
+
+        function generateResume() {
+            const preview = document.getElementById('resumePreview');
+            const name = document.getElementById('fullName').value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('contactNo').value;
+            const address = document.getElementById('address').value;
+            const summary = document.getElementById('summary').value;
+            const skills = document.getElementById('skills').value.split(',').map(skill => skill.trim());
+
+            // Gather education details
+            const educationEntries = Array.from(document.querySelectorAll('.education-entry')).map(entry => ({
+                school: entry.querySelector('input:nth-child(1)').value,
+                degree: entry.querySelector('input:nth-child(2)').value,
+                year: entry.querySelector('input:nth-child(3)').value
+            }));
+
+            // Gather experience details
+            const experienceEntries = Array.from(document.querySelectorAll('.experience-entry')).map(entry => ({
+                company: entry.querySelector('input:nth-child(1)').value,
+                position: entry.querySelector('input:nth-child(2)').value,
+                description: entry.querySelector('textarea').value
+            }));
+
+            // Gather project details
+            const projectEntries = Array.from(document.querySelectorAll('.project-entry')).map(entry => ({
+                title: entry.querySelector('input').value,
+                description: entry.querySelector('textarea').value
+            }));
+
+            let previewHTML = `
+                <div class="space-y-6">
+                    <div class="text-center">
+                        <img src="${document.getElementById('previewImage').src}" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                        <h1 class="text-3xl font-bold text-gray-800">${name}</h1>
+                        <p class="text-xl text-gray-600">${jobTitle}</p>
+                    </div>
+                    <div class="border-t pt-4">
+                        <p class="text-gray-700"><strong>Email:</strong> ${email}</p>
+                        <p class="text-gray-700"><strong>Phone:</strong> ${phone}</p>
+                        <p class="text-gray-700"><strong>Address:</strong> ${address}</p>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Professional Summary</h2>
+                        <p class="text-gray-700">${summary}</p>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Education</h2>
+                        ${educationEntries.map(edu => `
+                            <div class="mb-2">
+                                <p class="font-semibold">${edu.school}</p>
+                                <p class="text-gray-600">${edu.degree} - ${edu.year}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="border-t pt-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Skills</h2>
+                        <div class="flex flex-wrap gap-2">
+                            ${skills.map(skill => `
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">${skill}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Work Experience</h2>
+                        ${experienceEntries.map(exp => `
+                            <div class="mb-4">
+                                <p class="font-semibold">${exp.company}</p>
+                                <p class="text-gray-600">${exp.position}</p>
+                                <p class="text-gray-700">${exp.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="border-t pt-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Projects</h2>
+                        ${projectEntries.map(project => `
+                            <div class="mb-4">
+                                <p class="font-semibold">${project.title}</p>
+                                <p class="text-gray-700">${project.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+
+            preview.innerHTML = previewHTML;
+        }
+
+        function downloadResume() {
+            const element = document.getElementById('resumePreview');
+            html2pdf()
+                .set({
+                    margin: 0,
+                    filename: 'resume.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                })
+                .from(element)
+                .save();
+        }
+    </script>
+    </div>
+</body>
+</html>
